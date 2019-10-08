@@ -24,6 +24,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    aaptOptions {
+        noCompress "tflite"
+    }
 }
 
 dependencies {
@@ -43,6 +46,7 @@ dependencies {
     // MLKit Dependencies
     implementation 'com.google.firebase:firebase-ml-vision:23.0.0'
     implementation 'com.google.firebase:firebase-ml-vision-object-detection-model:19.0.1'
+    implementation 'com.google.firebase:firebase-ml-vision-automl:18.0.1'
     api 'com.google.guava:guava:27.1-jre'
 }
 

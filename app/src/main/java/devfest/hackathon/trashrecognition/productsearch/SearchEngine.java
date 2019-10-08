@@ -19,64 +19,80 @@ package devfest.hackathon.trashrecognition.productsearch;
 import android.content.Context;
 import android.util.Log;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.ml.common.FirebaseMLException;
+import com.google.firebase.ml.common.modeldownload.FirebaseLocalModel;
+import com.google.firebase.ml.common.modeldownload.FirebaseModelManager;
+import com.google.firebase.ml.vision.FirebaseVision;
+import com.google.firebase.ml.vision.common.FirebaseVisionImage;
+import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel;
+import com.google.firebase.ml.vision.label.FirebaseVisionImageLabeler;
+import com.google.firebase.ml.vision.label.FirebaseVisionOnDeviceAutoMLImageLabelerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import devfest.hackathon.trashrecognition.objectdetection.DetectedObject;
 
-/** A fake search engine to help simulate the complete work flow. */
+/**
+ * A fake search engine to help simulate the complete work flow.
+ */
 public class SearchEngine {
 
-  private static final String TAG = "SearchEngine";
+    private static final String TAG = "SearchEngine";
+    private FirebaseVisionImageLabeler labeler = null;
 
-  public interface SearchResultListener {
-    void onSearchCompleted(DetectedObject object, List<Product> productList);
-  }
-
-  private final RequestQueue searchRequestQueue;
-  private final ExecutorService requestCreationExecutor;
-
-  public SearchEngine(Context context) {
-    searchRequestQueue = Volley.newRequestQueue(context);
-    requestCreationExecutor = Executors.newSingleThreadExecutor();
-  }
-
-  public void search(DetectedObject object, SearchResultListener listener) {
-    // Crops the object image out of the full image is expensive, so do it off the UI thread.
-    Tasks.call(requestCreationExecutor, () -> createRequest(object))
-        .addOnSuccessListener(productRequest -> searchRequestQueue.add(productRequest.setTag(TAG)))
-        .addOnFailureListener(
-            e -> {
-              Log.e(TAG, "Failed to create product search request!", e);
-              // Remove the below dummy code after your own product search backed hooked up.
-              List<Product> productList = new ArrayList<>();
-              for (int i = 0; i < 8; i++) {
-                productList.add(
-                    new Product(/* imageUrl= */ "", "Product title " + i, "Product subtitle " + i));
-              }
-              listener.onSearchCompleted(object, productList);
-            });
-  }
-
-  private static JsonObjectRequest createRequest(DetectedObject searchingObject) throws Exception {
-    byte[] objectImageData = searchingObject.getImageData();
-    if (objectImageData == null) {
-      throw new Exception("Failed to get object image data!");
+    public interface SearchResultListener {
+        void onSearchCompleted(DetectedObject object, List<Product> productList);
     }
 
-    // Hooks up with your own product search backend here.
-    throw new Exception("Hooks up with your own product search backend.");
-  }
+    public SearchEngine(Context context) {
+        FirebaseLocalModel localModel = new FirebaseLocalModel.Builder("my_local_model")
+                .setAssetFilePath("manifest.json")
+                .build();
+        FirebaseModelManager.getInstance().registerLocalModel(localModel);
+        FirebaseVisionOnDeviceAutoMLImageLabelerOptions labelerOptions =
+                new FirebaseVisionOnDeviceAutoMLImageLabelerOptions.Builder()
+                        .setLocalModelName("my_local_model")
+                        .setConfidenceThreshold(0)
+                        .build();
 
-  public void shutdown() {
-    searchRequestQueue.cancelAll(TAG);
-    requestCreationExecutor.shutdown();
-  }
+        try {
+            labeler = FirebaseVision.getInstance().getOnDeviceAutoMLImageLabeler(labelerOptions);
+        } catch (FirebaseMLException e) {
+
+        }
+    }
+
+    public void search(DetectedObject object, SearchResultListener listener) {
+        // Crops the object image out of the full image is expensive, so do it off the UI thread.
+        labeler.processImage(FirebaseVisionImage.fromBitmap(object.getBitmap()))
+                .addOnSuccessListener(labels -> {
+                    for (FirebaseVisionImageLabel label : labels) {
+                        String text = label.getText();
+                        float confidence = label.getConfidence();
+                        System.out.println(text + "__________" + confidence);
+                        List<Product> productList = new ArrayList<>();
+                        for (int i = 0; i < 8; i++) {
+                            productList.add(
+                                    new Product(/* imageUrl= */ "", "Product title " + i, "Product subtitle " + i));
+                        }
+                        listener.onSearchCompleted(object, productList);
+                    }
+                })
+                .addOnFailureListener(
+                        e -> {
+                            Log.e(TAG, "Failed to create product search request!", e);
+                            // Remove the below dummy code after your own product search backed hooked up.
+                            List<Product> productList = new ArrayList<>();
+                            for (int i = 0; i < 8; i++) {
+                                productList.add(
+                                        new Product(/* imageUrl= */ "", "Product title " + i, "Product subtitle " + i));
+                            }
+                            listener.onSearchCompleted(object, productList);
+                        });
+    }
+
+
+    public void shutdown() {
+    }
 }
