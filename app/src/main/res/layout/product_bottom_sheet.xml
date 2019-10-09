@@ -1,30 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
 
-  <TextView
-      android:id="@+id/bottom_sheet_title"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_margin="@dimen/bottom_sheet_title_margin"
-      android:ellipsize="end"
-      android:fontFamily="sans-serif"
-      android:maxLines="1"
-      android:textColor="@color/black"
-      android:textSize="@dimen/bottom_sheet_title_size"/>
+    <TextView
+        android:id="@+id/bottom_sheet_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/bottom_sheet_title_margin"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif"
+        android:maxLines="1"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/bottom_sheet_title_size" />
 
-  <View
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/divider_height"
-      android:background="@color/lighter_grey"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:background="@color/lighter_grey" />
 
-  <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/product_recycler_view"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:scrollbars="vertical"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="233dp"
+            android:layout_weight="1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/paper"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/bottom_sheet_title_margin"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/bottom_sheet_title_size"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            tools:layout_editor_absoluteX="32dp" />
+
+        <Button
+            android:id="@+id/btnSearchConsumer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tìm người thu mua"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvContent" />
+
+        <ImageView
+            android:id="@+id/ivRecognitionType"
+            android:layout_width="match_parent"
+            android:layout_height="233dp"
+            android:layout_weight="1"
+            app:layout_constraintTop_toBottomOf="@+id/btnSearchConsumer"
+            app:srcCompat="@drawable/cardboard_sample"
+            tools:layout_editor_absoluteX="35dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

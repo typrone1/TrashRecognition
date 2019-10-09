@@ -36,7 +36,7 @@ public class DetectedObject {
 
   private final FirebaseVisionObject object;
   private final int objectIndex;
-  private final FirebaseVisionImage image;
+  private FirebaseVisionImage image;
 
   @Nullable
   private Bitmap bitmap = null;
