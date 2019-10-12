@@ -81,6 +81,10 @@ public class DetectedObject {
     return bitmap;
   }
 
+  public synchronized Bitmap getBitmapRaw() {
+    return image.getBitmap();
+  }
+
   @Nullable
   public synchronized byte[] getImageData() {
     if (jpegBytes == null) {

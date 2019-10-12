@@ -54,7 +54,7 @@
             android:layout_weight="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/paper" />
+            app:srcCompat="@drawable/paper_bin" />
 
         <ScrollView
             android:id="@+id/scrollView2"
