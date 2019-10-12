@@ -7,17 +7,24 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import devfest.hackathon.trashrecognition.common.Label;
 
 public class MainActivity extends AppCompatActivity {
-
+    private DatabaseReference firebaseDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        firebaseDatabase=FirebaseDatabase.getInstance().getReference();
+        firebaseDatabase.child("User").setValue("Hello world!");
+
         findViewById(R.id.floatingActionButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

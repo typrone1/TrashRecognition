@@ -33,11 +33,13 @@ package devfest.hackathon.trashrecognition;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.RectF;
 import android.hardware.Camera;
+import android.icu.text.CaseMap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -51,17 +53,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.common.base.Objects;
 
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -107,9 +108,8 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
     private Bitmap objectThumbnailForBottomSheet;
     private boolean slidingSheetUpFromHiddenState;
 
-    private Button btnUploadFirebase;
 
-    private FirebaseFirestore mFirestore;
+    private DatabaseReference database;
 
     private static final String NAME_KEY = "address";
 
@@ -117,8 +117,8 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
 
     private static final String PHONE_KEY = "description";
 
-
-
+    private TextView txtFinish;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,10 +128,8 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
 
         setContentView(R.layout.activity_live_object);
         //get Instance from firebase
-        mFirestore=FirebaseFirestore.getInstance();
-        btnUploadFirebase=findViewById(R.id.btnUploadFirebase);
 
-
+        txtFinish=findViewById(R.id.txtFinish);
 
 
         preview = findViewById(R.id.camera_preview);
@@ -161,25 +159,16 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
         settingsButton.setOnClickListener(this);
 
         setUpWorkflowModel();
-        initButton();
+        generateDialog();
+
     }
 
-    private void initButton() {
-        btnUploadFirebase.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Map < String, String > post = new HashMap< >();
-                post.put(NAME_KEY, "John");
-
-                post.put(EMAIL_KEY, "john@gmail.com");
-
-                post.put(PHONE_KEY, "080-0808-009");
-
-                mFirestore.collection("posts").document("aVTKX9nmO4DRhdVoldff").set(post);
-
-            }
-        });
+    private void generateDialog() {
+        dialog=new Dialog(this);
+        dialog.setContentView(R.layout.material_dialog);
+        dialog.show();
     }
+
 
     @Override
     protected void onResume() {
@@ -253,7 +242,7 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
         else if(id==R.id.btnUploadFirebase){
 
         }
-    }
+        }
 
     private void startCameraPreview() {
         if (!workflowModel.isCameraLive() && cameraSource != null) {
