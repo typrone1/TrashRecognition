@@ -26,7 +26,6 @@ import com.google.firebase.ml.common.modeldownload.FirebaseLocalModel;
 import com.google.firebase.ml.common.modeldownload.FirebaseModelManager;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
-import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabeler;
 import com.google.firebase.ml.vision.label.FirebaseVisionOnDeviceAutoMLImageLabelerOptions;
 
@@ -74,31 +73,28 @@ public class SearchEngine {
     }
 
     public void search(DetectedObject object, SearchResultListener listener) {
-        storeImage(object.getBitmap());
+//        storeImage(object.getBitmapRaw());
         // Crops the object image out of the full image is expensive, so do it off the UI thread.
-        labeler.processImage(FirebaseVisionImage.fromBitmap(object.getBitmapRaw()))
+        labeler.processImage(FirebaseVisionImage.fromBitmap(object.getBitmap()))
                 .addOnSuccessListener(labels -> {
                     String nameLabel;
-
-                    for (FirebaseVisionImageLabel label : labels) {
-                        nameLabel = label.getText();
-                        Product product = new Product();
-                        product.setTitle(nameLabel);
-                        List<Product> productList = new ArrayList<>();
-                        productList.add(product);
-                        listener.onSearchCompleted(object, productList);
-                    }
+                    nameLabel = labels.get(0).getText();
+                    Product product = new Product();
+                    product.setTitle(nameLabel);
+                    List<Product> productList = new ArrayList<>();
+                    productList.add(product);
+                    listener.onSearchCompleted(object, productList);
                 })
                 .addOnFailureListener(
                         e -> {
                             Log.e(TAG, "Failed to create product search request!", e);
-                            // Remove the below dummy code after your own product search backed hooked up.
-                            List<Product> productList = new ArrayList<>();
-                            for (int i = 0; i < 8; i++) {
-                                productList.add(
-                                        new Product(/* imageUrl= */ "", "Product title " + i, "Product subtitle " + i));
-                            }
-                            listener.onSearchCompleted(object, productList);
+//                            // Remove the below dummy code after your own product search backed hooked up.
+//                            List<Product> productList = new ArrayList<>();
+//                            for (int i = 0; i < 8; i++) {
+//                                productList.add(
+//                                        new Product(/* imageUrl= */ "", "Product title " + i, "Product subtitle " + i));
+//                            }
+//                            listener.onSearchCompleted(object, productList);
                         });
     }
 
@@ -115,7 +111,7 @@ public class SearchEngine {
         }
         try {
             FileOutputStream fos = new FileOutputStream(pictureFile);
-            image.compress(Bitmap.CompressFormat.PNG, 90, fos);
+            image.compress(Bitmap.CompressFormat.PNG, 100, fos);
             fos.close();
         } catch (FileNotFoundException e) {
             Log.d(TAG, "File not found: " + e.getMessage());

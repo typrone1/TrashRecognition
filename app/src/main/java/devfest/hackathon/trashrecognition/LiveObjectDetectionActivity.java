@@ -376,9 +376,8 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
                             ivImageGeneral.setImageDrawable(d);
                             ims.close();
                         } catch (Exception e) {
-
+                            e.printStackTrace();
                         }
-
                         slidingSheetUpFromHiddenState = true;
                         bottomSheetBehavior.setPeekHeight(preview.getHeight() / 2);
                         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
