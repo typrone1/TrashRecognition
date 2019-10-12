@@ -1,7 +1,5 @@
 package devfest.hackathon.trashrecognition.common;
 
-import android.graphics.Bitmap;
-
 public class RecognitionResult {
     private String label;
     private String title;
@@ -9,7 +7,7 @@ public class RecognitionResult {
     private String description;
     private boolean droppable = true;
     private boolean sellable = true;
-    private Bitmap imageGeneral;
+    private String imageGeneralUrl;
 
     public String getLabel() {
         return label;
@@ -59,11 +57,11 @@ public class RecognitionResult {
         this.sellable = sellable;
     }
 
-    public Bitmap getImageGeneral() {
-        return imageGeneral;
+    public String getImageGeneralUrl() {
+        return imageGeneralUrl;
     }
 
-    public void setImageGeneral(Bitmap imageGeneral) {
-        this.imageGeneral = imageGeneral;
+    public void setImageGeneralUrl(String imageGeneralUrl) {
+        this.imageGeneralUrl = imageGeneralUrl;
     }
 }

@@ -34,16 +34,20 @@ package devfest.hackathon.trashrecognition;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -58,6 +62,7 @@ import com.google.common.base.Objects;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,6 +107,10 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
     private TextView bottomSheetTitleView;
     private Bitmap objectThumbnailForBottomSheet;
     private boolean slidingSheetUpFromHiddenState;
+    private TextView tvTitle;
+    private TextView tvDescription;
+    private TextView tvTypeOfTrash;
+    private ImageView ivImageGeneral;
 
     private Button btnUploadFirebase;
 
@@ -114,6 +123,7 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
     private static final String PHONE_KEY = "description";
 
     private static List<RecognitionResult> solutions = new ArrayList<RecognitionResult>();
+    private Dialog dialog;
 
     private Button btnSearchConsumer;
 
@@ -157,20 +167,18 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
         settingsButton = findViewById(R.id.settings_button);
         settingsButton.setOnClickListener(this);
 
+        tvTitle = findViewById(R.id.tvTitle);
+        tvDescription = findViewById(R.id.tvDescription);
+        tvTypeOfTrash = findViewById(R.id.tvTypeOfTrash);
+        ivImageGeneral = findViewById(R.id.ivImageGeneral);
         setUpWorkflowModel();
         initButton();
     }
 
-    private void initButton() {
-        btnUploadFirebase.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-        btnSearchConsumer.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LiveObjectDetectionActivity.this,SellProductActivity.class));
+    private void initialDialog() {
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.material_dialog);
+        dialog.show();
             }
         });
 
@@ -365,6 +373,20 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
                         RecognitionResult recognitionResult = findSolutionByLabel(productRecognition.getTitle());
                         objectThumbnailForBottomSheet = searchedObject.getObjectThumbnail();
                         bottomSheetTitleView.setText(productRecognition.getTitle());
+                        bottomSheetTitleView.setText(recognitionResult.getTitle());
+                        tvTitle.setText(recognitionResult.getTitle());
+                        tvTypeOfTrash.setText(recognitionResult.getTypeOfTrashText());
+                        tvDescription.setText(recognitionResult.getDescription());
+
+                        try {
+                            AssetManager assetManager = getAssets();
+                            InputStream ims = assetManager.open(recognitionResult.getImageGeneralUrl());
+                            Drawable d = Drawable.createFromStream(ims, null);
+                            ivImageGeneral.setImageDrawable(d);
+                            ims.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         slidingSheetUpFromHiddenState = true;
                         bottomSheetBehavior.setPeekHeight(preview.getHeight() / 2);
                         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
@@ -482,26 +504,57 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
         RecognitionResult solutionForElectronic = new RecognitionResult();
         solutionForMetal.setLabel("metal");
         solutionForMetal.setTitle("Kim loại");
+        solutionForMetal.setImageGeneralUrl("metal.png");
         solutionForMetal.setDescription("Người dân chủ động bán/cho tặng người hoặc hệ thống thu gom phế liệu");
         solutionForMetal.setTypeOfTrashText("Chất thải tái chế");
         solutionForGlass.setLabel("glass");
+        solutionForGlass.setImageGeneralUrl("glass.jpg");
         solutionForGlass.setTitle("Thủy tinh");
         solutionForGlass.setDescription("Người dân chủ động bán/cho tặng người hoặc hệ thống thu gom phế liệu");
         solutionForGlass.setTypeOfTrashText("Chất thải tái chế");
         solutionForBattery.setLabel("batteries");
+        solutionForBattery.setImageGeneralUrl("battery.png");
         solutionForBattery.setTitle("Pin, ắc quy");
         solutionForBattery.setDescription("Phải mang đến điểm thu hồi chất thải nguy h");
         solutionForBattery.setTypeOfTrashText("Chất thải rất độc hại");
         solutionForCardboard.setLabel("cardboard");
         solutionForCardboard.setTitle("Giấy bìa cứng");
+        solutionForCardboard.setImageGeneralUrl("cardboard.jpg");
         solutionForCardboard.setDescription("Người dân chủ động bán/cho tặng người hoặc hệ thống thu gom phế liệu");
         solutionForCardboard.setTypeOfTrashText("Chất thải tái chế");
         solutionForOrganic.setLabel("organic");
+        solutionForOrganic.setImageGeneralUrl("organic.jpg");
+        solutionForOrganic.setTitle("Chất thải thực vật dễ phân hủy");
+        solutionForOrganic.setDescription("Cho nào túi màu xanh lục hoặc có nhãn chất thải hữu cơ. Xử lý chuyển thành phân b");
+        solutionForOrganic.setTypeOfTrashText("Rác hữu cơ");
         solutionForPlastic.setLabel("plastic");
+        solutionForPlastic.setImageGeneralUrl("plastic.png");
+        solutionForPlastic.setTitle("Nhựa");
+        solutionForPlastic.setDescription("Người dân chủ động bán/cho tặng người hoặc hệ thống thu gom phế liệu");
+        solutionForPlastic.setTypeOfTrashText("Chất thải tái chế");
         solutionForTrash.setLabel("trash");
+        solutionForTrash.setImageGeneralUrl("trash.png");
+        solutionForTrash.setTitle("Nhựa tái chế");
+        solutionForTrash.setDescription("Người dân chủ động bán/cho tặng người hoặc hệ thống thu gom phế liệu");
+        solutionForTrash.setTypeOfTrashText("Chất thải tái chế");
         solutionForElectronic.setLabel("electronic");
+        solutionForElectronic.setImageGeneralUrl("electronic.jpg");
+        solutionForElectronic.setTitle("Đồ điện tử");
+        solutionForElectronic.setDescription("Phải mang đến điểm thu hồi chất thải nguy hồi");
+        solutionForElectronic.setTypeOfTrashText("Chất thải rất độc hại");
         solutionForPaper.setLabel("paper");
+        solutionForPaper.setImageGeneralUrl("paper.jpg");
+        solutionForPaper.setTitle("Giấy loại");
+        solutionForPaper.setDescription("Người dân chủ động bán/cho tặng người hoặc hệ thống thu gom phế liệu");
+        solutionForPaper.setTypeOfTrashText("Chất thải tái chế");
         solutions.add(solutionForMetal);
+        solutions.add(solutionForGlass);
+        solutions.add(solutionForBattery);
+        solutions.add(solutionForCardboard);
+        solutions.add(solutionForOrganic);
+        solutions.add(solutionForPlastic);
+        solutions.add(solutionForTrash);
+        solutions.add(solutionForPaper);
     }
 
     private static RecognitionResult findSolutionByLabel(String label) {
