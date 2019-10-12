@@ -49,8 +49,8 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="162dp"
-            android:layout_height="172dp"
+            android:layout_width="178dp"
+            android:layout_height="287dp"
             android:layout_weight="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -68,10 +68,10 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:padding="10dp"
                     android:id="@+id/tvDescription"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:padding="10dp"
                     android:text="Cách thức xử lý"
                     android:textColor="@color/black" />
             </LinearLayout>
@@ -114,8 +114,8 @@
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="0dp"
-            android:padding="10dp"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:text="Title"
             android:textColor="@color/black"
             android:textSize="18dp"
@@ -135,6 +135,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+        <ImageView
+            android:id="@+id/ivImageGeneral"
+            android:layout_width="146dp"
+            android:layout_height="107dp"
+            app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.425"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/tvTypeOfTrash"
+            app:srcCompat="@drawable/battery" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
