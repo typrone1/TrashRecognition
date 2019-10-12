@@ -31,7 +31,6 @@ import com.google.firebase.ml.vision.label.FirebaseVisionOnDeviceAutoMLImageLabe
 import java.util.ArrayList;
 import java.util.List;
 
-import devfest.hackathon.trashrecognition.common.Label;
 import devfest.hackathon.trashrecognition.objectdetection.DetectedObject;
 
 /**
@@ -69,25 +68,14 @@ public class SearchEngine {
         labeler.processImage(FirebaseVisionImage.fromBitmap(object.getBitmap()))
                 .addOnSuccessListener(labels -> {
                     String nameLabel;
-                    float confidence;
-                    int id=0;
-                    int layout=0;
 
                     for (FirebaseVisionImageLabel label : labels) {
                         nameLabel = label.getText();
-                        confidence = label.getConfidence();
-                        System.out.println(nameLabel + "__________" + confidence);
-
-                        List<Label> labelList=new ArrayList<>();
-                        labelList.add(new Label(id,object.getBitmap(),nameLabel));
-
+                        Product product = new Product();
+                        product.setTitle(nameLabel);
                         List<Product> productList = new ArrayList<>();
-                        for (int i = 0; i < 8; i++) {
-                            productList.add(
-                                    new Product(/* imageUrl= */ "", "Product title " + i, "Product subtitle " + i));
-                        }
+                        productList.add(product);
                         listener.onSearchCompleted(object, productList);
-
                     }
                 })
                 .addOnFailureListener(

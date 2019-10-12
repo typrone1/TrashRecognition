@@ -16,16 +16,45 @@
 
 package devfest.hackathon.trashrecognition.productsearch;
 
-/** Information about a product. */
+/**
+ * Information about a product.
+ */
 public class Product {
 
-  final String imageUrl;
-  final String title;
-  final String subtitle;
+    String imageUrl;
+    String title;
+    String subtitle;
 
-  Product(String imageUrl, String title, String subtitle) {
-    this.imageUrl = imageUrl;
-    this.title = title;
-    this.subtitle = subtitle;
-  }
+    public Product() {
+    }
+
+    Product(String imageUrl, String title, String subtitle) {
+        this.imageUrl = imageUrl;
+        this.title = title;
+        this.subtitle = subtitle;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+    }
 }

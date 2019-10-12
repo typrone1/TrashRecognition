@@ -45,32 +45,27 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.common.base.Objects;
-
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import devfest.hackathon.trashrecognition.camera.CameraSource;
 import devfest.hackathon.trashrecognition.camera.CameraSourcePreview;
 import devfest.hackathon.trashrecognition.camera.GraphicOverlay;
 import devfest.hackathon.trashrecognition.camera.WorkflowModel;
 import devfest.hackathon.trashrecognition.camera.WorkflowModel.WorkflowState;
-import devfest.hackathon.trashrecognition.common.Label;
+import devfest.hackathon.trashrecognition.common.RecognitionResult;
 import devfest.hackathon.trashrecognition.objectdetection.MultiObjectProcessor;
 import devfest.hackathon.trashrecognition.objectdetection.ProminentObjectProcessor;
 import devfest.hackathon.trashrecognition.productsearch.BottomSheetScrimView;
@@ -117,13 +112,12 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
 
     private static final String PHONE_KEY = "description";
 
-
-
+    private static List<RecognitionResult> solutions = new ArrayList<RecognitionResult>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setupMockDataSolution();
         searchEngine = new SearchEngine(getApplicationContext());
 
         setContentView(R.layout.activity_live_object);
@@ -168,15 +162,6 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
         btnUploadFirebase.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Map < String, String > post = new HashMap< >();
-                post.put(NAME_KEY, "John");
-
-                post.put(EMAIL_KEY, "john@gmail.com");
-
-                post.put(PHONE_KEY, "080-0808-009");
-
-                mFirestore.collection("posts").document("aVTKX9nmO4DRhdVoldff").set(post);
-
             }
         });
     }
@@ -366,20 +351,18 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
                 this,
                 searchedObject -> {
                     if (searchedObject != null) {
-                        List<Product> productList = searchedObject.getProductList();
+                        Product productRecognition = searchedObject.getProductList().get(0);
+                        RecognitionResult recognitionResult = findSolutionByLabel(productRecognition.getTitle());
                         objectThumbnailForBottomSheet = searchedObject.getObjectThumbnail();
-                        bottomSheetTitleView.setText(
-                                getResources()
-                                        .getQuantityString(
-                                                R.plurals.bottom_sheet_title, productList.size(), productList.size()));
+                        bottomSheetTitleView.setText(productRecognition.getTitle());
                         slidingSheetUpFromHiddenState = true;
                         bottomSheetBehavior.setPeekHeight(preview.getHeight() / 2);
                         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-
-
                     }
                 });
     }
+
+
 
     private void stateChangeInAutoSearchMode(WorkflowState workflowState) {
         boolean wasPromptChipGone = (promptChip.getVisibility() == View.GONE);
@@ -476,4 +459,48 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
             searchButtonAnimator.start();
         }
     }
+
+    private static void setupMockDataSolution() {
+        RecognitionResult solutionForMetal = new RecognitionResult();
+        RecognitionResult solutionForGlass = new RecognitionResult();
+        RecognitionResult solutionForBattery = new RecognitionResult();
+        RecognitionResult solutionForCardboard = new RecognitionResult();
+        RecognitionResult solutionForOrganic = new RecognitionResult();
+        RecognitionResult solutionForPlastic = new RecognitionResult();
+        RecognitionResult solutionForPaper = new RecognitionResult();
+        RecognitionResult solutionForTrash = new RecognitionResult();
+        RecognitionResult solutionForElectronic = new RecognitionResult();
+        solutionForMetal.setLabel("metal");
+        solutionForMetal.setTitle("Kim loại");
+        solutionForMetal.setDescription("Người dân chủ động bán/cho tặng người hoặc hệ thống thu gom phế liệu");
+        solutionForMetal.setTypeOfTrashText("Chất thải tái chế");
+        solutionForGlass.setLabel("glass");
+        solutionForGlass.setTitle("Thủy tinh");
+        solutionForGlass.setDescription("Người dân chủ động bán/cho tặng người hoặc hệ thống thu gom phế liệu");
+        solutionForGlass.setTypeOfTrashText("Chất thải tái chế");
+        solutionForBattery.setLabel("batteries");
+        solutionForBattery.setTitle("Pin, ắc quy");
+        solutionForBattery.setDescription("Phải mang đến điểm thu hồi chất thải nguy h");
+        solutionForBattery.setTypeOfTrashText("Chất thải rất độc hại");
+        solutionForCardboard.setLabel("cardboard");
+        solutionForCardboard.setTitle("Giấy bìa cứng");
+        solutionForCardboard.setDescription("Người dân chủ động bán/cho tặng người hoặc hệ thống thu gom phế liệu");
+        solutionForCardboard.setTypeOfTrashText("Chất thải tái chế");
+        solutionForOrganic.setLabel("organic");
+        solutionForPlastic.setLabel("plastic");
+        solutionForTrash.setLabel("trash");
+        solutionForElectronic.setLabel("electronic");
+        solutionForPaper.setLabel("paper");
+        solutions.add(solutionForMetal);
+    }
+
+    private static RecognitionResult findSolutionByLabel(String label) {
+        for (RecognitionResult recognitionResult : solutions) {
+            if (recognitionResult.getLabel().equals(label)) {
+                return recognitionResult;
+            }
+        }
+        return null;
+    }
+
 }

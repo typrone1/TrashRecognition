@@ -7,79 +7,136 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/bottom_sheet_title"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/bottom_sheet_title_margin"
-        android:ellipsize="end"
-        android:fontFamily="sans-serif"
-        android:maxLines="1"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="@dimen/bottom_sheet_title_size" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider_height"
-        android:background="@color/lighter_grey" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <Button
-            android:id="@+id/btnSearchConsumer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tìm người thu mua"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvContent" />
-
-        <Button
-            android:id="@+id/btnUploadFirebase"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
-            android:gravity="center_horizontal"
-            android:text="Upload"
-            app:layout_constraintBottom_toTopOf="@+id/btnSearchConsumer"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvContent"
-            tools:ignore="MissingConstraints" />
+        android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="233dp"
-            android:layout_weight="1"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/paper"
-            tools:layout_editor_absoluteX="16dp" />
-
-        <ImageView
-            android:id="@+id/ivRecognitionType"
-            android:layout_width="match_parent"
-            android:layout_height="233dp"
-            android:layout_weight="1"
-            app:layout_constraintTop_toBottomOf="@+id/btnSearchConsumer"
-            app:srcCompat="@drawable/cardboard_sample"
-            tools:layout_editor_absoluteX="35dp" />
+            android:id="@+id/imageView2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="16dp"
+            app:srcCompat="@drawable/recycling_symbol" />
 
         <TextView
-            android:id="@+id/tvContent"
+            android:id="@+id/bottom_sheet_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/bottom_sheet_title_margin"
             android:ellipsize="end"
             android:fontFamily="sans-serif"
             android:maxLines="1"
-            android:textAlignment="center"
+            android:text="sample text"
             android:textColor="@color/black"
             android:textSize="@dimen/bottom_sheet_title_size"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"
-            tools:layout_editor_absoluteX="32dp" />
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:layout_marginBottom="20dp"
+        android:background="@color/lighter_grey" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="162dp"
+            android:layout_height="172dp"
+            android:layout_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/paper" />
+
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="match_parent"
+            android:layout_height="500px"
+            app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:padding="10dp"
+                    android:id="@+id/tvDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Cách thức xử lý"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btnSearchConsumer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tìm người thu mua"
+            app:layout_constraintTop_toBottomOf="@+id/btnUploadFirebase"
+            tools:layout_editor_absoluteX="140dp" />
+
+        <Button
+            android:id="@+id/btnFindPlaceToDrop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tìm điểm xử lý"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+
+        <Button
+            android:id="@+id/btnUploadFirebase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Upload"
+            app:layout_constraintTop_toBottomOf="@+id/btnFindPlaceToDrop" />
+
+        <TextView
+            android:id="@+id/lblInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Thông tin nhận dạng"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:padding="10dp"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/lblInfo" />
+
+        <TextView
+            android:id="@+id/tvTypeOfTrash"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Metal"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </LinearLayout>
