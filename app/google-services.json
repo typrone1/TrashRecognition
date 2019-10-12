@@ -124,12 +124,20 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:177044035138:android:c26b05befe76c75e573fdb",
+        "mobilesdk_app_id": "1:177044035138:android:8305f1000472edc0573fdb",
         "android_client_info": {
           "package_name": "devfest.hackathon.trashrecognition"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "177044035138-v4pumfmq90hltpqcl8lt7h7hob837gt6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "devfest.hackathon.trashrecognition",
+            "certificate_hash": "8816b71a71be2d677fb46796794100762dd689cc"
+          }
+        },
         {
           "client_id": "177044035138-qu4imv6uuprk57huot9hgpn8er7bqb2k.apps.googleusercontent.com",
           "client_type": 3

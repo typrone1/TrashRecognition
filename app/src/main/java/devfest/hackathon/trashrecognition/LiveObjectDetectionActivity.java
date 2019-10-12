@@ -33,6 +33,7 @@ package devfest.hackathon.trashrecognition;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -114,6 +115,8 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
 
     private static List<RecognitionResult> solutions = new ArrayList<RecognitionResult>();
 
+    private Button btnSearchConsumer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,7 +128,7 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
         mFirestore=FirebaseFirestore.getInstance();
         btnUploadFirebase=findViewById(R.id.btnUploadFirebase);
 
-
+        btnSearchConsumer=findViewById(R.id.btnSearchConsumer);
 
 
         preview = findViewById(R.id.camera_preview);
@@ -164,6 +167,13 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
             public void onClick(View v) {
             }
         });
+        btnSearchConsumer.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LiveObjectDetectionActivity.this,SellProductActivity.class));
+            }
+        });
+
     }
 
     @Override

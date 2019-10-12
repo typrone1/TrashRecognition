@@ -19,6 +19,8 @@ package devfest.hackathon.trashrecognition.productsearch;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.ml.common.FirebaseMLException;
 import com.google.firebase.ml.common.modeldownload.FirebaseLocalModel;
 import com.google.firebase.ml.common.modeldownload.FirebaseModelManager;
@@ -64,6 +66,7 @@ public class SearchEngine {
     }
 
     public void search(DetectedObject object, SearchResultListener listener) {
+
         // Crops the object image out of the full image is expensive, so do it off the UI thread.
         labeler.processImage(FirebaseVisionImage.fromBitmap(object.getBitmap()))
                 .addOnSuccessListener(labels -> {
@@ -71,8 +74,11 @@ public class SearchEngine {
 
                     for (FirebaseVisionImageLabel label : labels) {
                         nameLabel = label.getText();
+
                         Product product = new Product();
                         product.setTitle(nameLabel);
+
+
                         List<Product> productList = new ArrayList<>();
                         productList.add(product);
                         listener.onSearchCompleted(object, productList);

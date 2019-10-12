@@ -78,6 +78,7 @@
         </ScrollView>
 
         <Button
+            android:background="@drawable/border_common"
             android:id="@+id/btnSearchConsumer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,6 +87,7 @@
             tools:layout_editor_absoluteX="140dp" />
 
         <Button
+            android:background="@drawable/border_common"
             android:id="@+id/btnFindPlaceToDrop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -93,6 +95,7 @@
             app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
         <Button
+            android:background="@drawable/border_common"
             android:id="@+id/btnUploadFirebase"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
