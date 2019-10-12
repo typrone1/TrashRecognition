@@ -13,6 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/*
+ * Copyright 2019 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package devfest.hackathon.trashrecognition;
 
@@ -27,26 +42,35 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.common.base.Objects;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import devfest.hackathon.trashrecognition.camera.CameraSource;
 import devfest.hackathon.trashrecognition.camera.CameraSourcePreview;
 import devfest.hackathon.trashrecognition.camera.GraphicOverlay;
 import devfest.hackathon.trashrecognition.camera.WorkflowModel;
 import devfest.hackathon.trashrecognition.camera.WorkflowModel.WorkflowState;
+import devfest.hackathon.trashrecognition.common.Label;
 import devfest.hackathon.trashrecognition.objectdetection.MultiObjectProcessor;
 import devfest.hackathon.trashrecognition.objectdetection.ProminentObjectProcessor;
 import devfest.hackathon.trashrecognition.productsearch.BottomSheetScrimView;
@@ -83,6 +107,19 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
     private Bitmap objectThumbnailForBottomSheet;
     private boolean slidingSheetUpFromHiddenState;
 
+    private Button btnUploadFirebase;
+
+    private FirebaseFirestore mFirestore;
+
+    private static final String NAME_KEY = "address";
+
+    private static final String EMAIL_KEY = "amount";
+
+    private static final String PHONE_KEY = "description";
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +127,13 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
         searchEngine = new SearchEngine(getApplicationContext());
 
         setContentView(R.layout.activity_live_object);
+        //get Instance from firebase
+        mFirestore=FirebaseFirestore.getInstance();
+        btnUploadFirebase=findViewById(R.id.btnUploadFirebase);
+
+
+
+
         preview = findViewById(R.id.camera_preview);
         graphicOverlay = findViewById(R.id.camera_preview_graphic_overlay);
         graphicOverlay.setOnClickListener(this);
@@ -117,6 +161,24 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
         settingsButton.setOnClickListener(this);
 
         setUpWorkflowModel();
+        initButton();
+    }
+
+    private void initButton() {
+        btnUploadFirebase.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Map < String, String > post = new HashMap< >();
+                post.put(NAME_KEY, "John");
+
+                post.put(EMAIL_KEY, "john@gmail.com");
+
+                post.put(PHONE_KEY, "080-0808-009");
+
+                mFirestore.collection("posts").document("aVTKX9nmO4DRhdVoldff").set(post);
+
+            }
+        });
     }
 
     @Override
@@ -186,6 +248,9 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
             // Sets as disabled to prevent the user from clicking on it too fast.
             settingsButton.setEnabled(false);
             startActivity(new Intent(this, SettingsActivity.class));
+
+        }
+        else if(id==R.id.btnUploadFirebase){
 
         }
     }
@@ -310,6 +375,8 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
                         slidingSheetUpFromHiddenState = true;
                         bottomSheetBehavior.setPeekHeight(preview.getHeight() / 2);
                         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+
                     }
                 });
     }

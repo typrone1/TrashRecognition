@@ -2,9 +2,15 @@ package devfest.hackathon.trashrecognition;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import devfest.hackathon.trashrecognition.common.Label;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, LiveObjectDetectionActivity.class));
             }
         });
+
     }
 
     @Override

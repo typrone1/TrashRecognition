@@ -28,6 +28,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <Button
+            android:id="@+id/btnSearchConsumer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tìm người thu mua"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvContent" />
+
+        <Button
+            android:id="@+id/btnUploadFirebase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:gravity="center_horizontal"
+            android:text="Upload"
+            app:layout_constraintBottom_toTopOf="@+id/btnSearchConsumer"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvContent"
+            tools:ignore="MissingConstraints" />
+
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
@@ -36,6 +58,15 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/paper"
             tools:layout_editor_absoluteX="16dp" />
+
+        <ImageView
+            android:id="@+id/ivRecognitionType"
+            android:layout_width="match_parent"
+            android:layout_height="233dp"
+            android:layout_weight="1"
+            app:layout_constraintTop_toBottomOf="@+id/btnSearchConsumer"
+            app:srcCompat="@drawable/cardboard_sample"
+            tools:layout_editor_absoluteX="35dp" />
 
         <TextView
             android:id="@+id/tvContent"
@@ -50,23 +81,5 @@
             android:textSize="@dimen/bottom_sheet_title_size"
             app:layout_constraintTop_toBottomOf="@+id/imageView"
             tools:layout_editor_absoluteX="32dp" />
-
-        <Button
-            android:id="@+id/btnSearchConsumer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tìm người thu mua"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvContent" />
-
-        <ImageView
-            android:id="@+id/ivRecognitionType"
-            android:layout_width="match_parent"
-            android:layout_height="233dp"
-            android:layout_weight="1"
-            app:layout_constraintTop_toBottomOf="@+id/btnSearchConsumer"
-            app:srcCompat="@drawable/cardboard_sample"
-            tools:layout_editor_absoluteX="35dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

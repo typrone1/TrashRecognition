@@ -56,4 +56,8 @@
     <string name="pref_key_confirmation_time_in_auto_search" translatable="false">ctias</string>
     <string name="pref_title_confirmation_time_in_auto_search">Thời gian xác nhận trong tìm kiếm tự động</string>
     <string name="pref_summary_confirmation_time_in_auto_search">Ranges from 500ms to 2000ms</string>
+
+    <string name="diplay_title_item">Rác tái chế</string>
+    <string name="sell_items">Bán chuyên</string>
+    <string name="Priority">Ưu tiên</string>
 </resources>
