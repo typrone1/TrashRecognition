@@ -22,10 +22,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:lineSpacingExtra="8dp"
-        android:text="There Is No Gain \n Without Pain"
+        android:text="Action today \n Safety for the furture"
         android:textAlignment="center"
         android:textColor="#000000"
-        android:textSize="36sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgpage" />

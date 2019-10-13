@@ -89,8 +89,8 @@ public class SearchEngine {
                     List<Product> productList = new ArrayList<>();
                     productList.add(product);
                     listener.onSearchCompleted(object, productList);
-                    }
                 })
+
                 .addOnFailureListener(
                         e -> {
                             Log.e(TAG, "Failed to create product search request!", e);

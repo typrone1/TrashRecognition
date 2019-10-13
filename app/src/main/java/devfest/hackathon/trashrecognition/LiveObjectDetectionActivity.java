@@ -34,7 +34,9 @@ package devfest.hackathon.trashrecognition;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -44,18 +46,23 @@ import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.common.base.Objects;
@@ -112,7 +119,6 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
     private TextView tvTypeOfTrash;
     private ImageView ivImageGeneral;
 
-    private Button btnUploadFirebase;
 
     private FirebaseFirestore mFirestore;
 
@@ -136,10 +142,15 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
         setContentView(R.layout.activity_live_object);
         //get Instance from firebase
         mFirestore=FirebaseFirestore.getInstance();
-        btnUploadFirebase=findViewById(R.id.btnUploadFirebase);
 
         btnSearchConsumer=findViewById(R.id.btnSearchConsumer);
 
+        btnSearchConsumer.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LiveObjectDetectionActivity.this,SellProductActivity.class));
+            }
+        });
 
         preview = findViewById(R.id.camera_preview);
         graphicOverlay = findViewById(R.id.camera_preview_graphic_overlay);
@@ -170,17 +181,22 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
         tvTitle = findViewById(R.id.tvTitle);
         tvDescription = findViewById(R.id.tvDescription);
         tvTypeOfTrash = findViewById(R.id.tvTypeOfTrash);
-        ivImageGeneral = findViewById(R.id.ivImageGeneral);
+        //hình ảnh của pin
+        //ivImageGeneral = findViewById(R.id.ivImageGeneral);
+
+
+
         setUpWorkflowModel();
-        initButton();
+        showAlertDialog();
+
+
     }
 
-    private void initialDialog() {
-        dialog = new Dialog(this);
+    public void showAlertDialog(){
+        Dialog dialog=new Dialog(this,android.R.style.Theme_DeviceDefault_Wallpaper_NoTitleBar);
+        dialog.setCanceledOnTouchOutside(true);
         dialog.setContentView(R.layout.material_dialog);
         dialog.show();
-            }
-        });
 
     }
 
@@ -251,9 +267,6 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
             // Sets as disabled to prevent the user from clicking on it too fast.
             settingsButton.setEnabled(false);
             startActivity(new Intent(this, SettingsActivity.class));
-
-        }
-        else if(id==R.id.btnUploadFirebase){
 
         }
     }

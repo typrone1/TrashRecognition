@@ -9,11 +9,14 @@
 
 
     <LinearLayout
+        android:id="@+id/txtInfomation"
+        android:weightSum="10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <ImageView
+            android:layout_weight="1"
             android:id="@+id/imageView2"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -26,13 +29,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/bottom_sheet_title_margin"
+            android:layout_weight="8"
             android:ellipsize="end"
-            android:fontFamily="sans-serif"
+            android:fontFamily="@font/open_sans_semibold"
             android:maxLines="1"
-            android:text="sample text"
+            android:text="Thông tin sản phẩm"
             android:textColor="@color/black"
             android:textSize="@dimen/bottom_sheet_title_size"
             android:textStyle="bold" />
+        <ImageView
+            android:layout_marginEnd="10dp"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:id="@+id/imgHideRecommend"
+            android:src="@drawable/baseline_keyboard_arrow_down_black_18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 
@@ -48,9 +60,11 @@
         android:scrollbars="vertical">
 
         <ImageView
+
             android:id="@+id/imageView"
-            android:layout_width="178dp"
-            android:layout_height="287dp"
+            android:background="@null"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_weight="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -59,65 +73,103 @@
         <ScrollView
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
-            android:layout_height="500px"
+            android:layout_height="100dp"
             app:layout_constraintTop_toBottomOf="@+id/imageView">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvDescription"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/open_sans_semibold"
                     android:padding="10dp"
-                    android:text="Cách thức xử lý"
+                    android:text="Cách thức xử lý:"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tvDescriptionContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="@font/open_sans_light"
+                    android:text="Các loại rác dễ phân hủy thức ăn thừa cho vào túi màu xanh lục hoặc  dán nhãn chất thải hữu cơ xứ lý chuyển thành phân bón"
                     android:textColor="@color/black" />
             </LinearLayout>
         </ScrollView>
 
-        <Button
-            android:background="@drawable/border_common"
-            android:id="@+id/btnSearchConsumer"
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:weightSum="10"
+            android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tìm người thu mua"
-            app:layout_constraintTop_toBottomOf="@+id/btnUploadFirebase"
-            tools:layout_editor_absoluteX="140dp" />
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+            tools:ignore="MissingConstraints">
 
-        <Button
-            android:background="@drawable/border_common"
-            android:id="@+id/btnFindPlaceToDrop"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tìm điểm xử lý"
-            app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+            <Button
+                android:id="@+id/btnSearchConsumer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="5"
+                android:background="@drawable/border_common"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="Đăng bán" />
 
-        <Button
-            android:background="@drawable/border_common"
-            android:id="@+id/btnUploadFirebase"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Upload"
-            app:layout_constraintTop_toBottomOf="@+id/btnFindPlaceToDrop" />
+            <Button
+                android:id="@+id/btnFindPlaceToDrop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="5"
+                android:background="@drawable/border_common"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="Tìm điểm xử lý" />
 
-        <TextView
-            android:id="@+id/lblInfo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Thông tin nhận dạng"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/btn_upload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/border_common"
+                android:fontFamily="@font/open_sans_semibold"
+                android:gravity="center_horizontal"
+                android:text="Upload "
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+                tools:ignore="MissingConstraints" />
+
+        </LinearLayout>
+
+
+
+<!--        <TextView-->
+<!--            android:id="@+id/lblInfo"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Đây là rác thải"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="16dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/imageView"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
 
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_bold"
+            android:gravity="center_horizontal"
             android:padding="10dp"
             android:text="Title"
             android:textColor="@color/black"
@@ -126,29 +178,33 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/lblInfo" />
+            app:layout_constraintTop_toBottomOf="@+id/txtInfomation"
+            tools:ignore="NotSibling" />
 
         <TextView
+            android:layout_marginStart="10dp"
             android:id="@+id/tvTypeOfTrash"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_light"
             android:padding="10dp"
             android:text="Metal"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
-        <ImageView
-            android:id="@+id/ivImageGeneral"
-            android:layout_width="146dp"
-            android:layout_height="107dp"
-            app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.425"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/tvTypeOfTrash"
-            app:srcCompat="@drawable/battery" />
+        <!--        <ImageView-->
+<!--            android:id="@+id/ivImageGeneral"-->
+<!--            android:layout_width="146dp"-->
+<!--            android:layout_height="107dp"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/scrollView2"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.425"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/imageView"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/tvTypeOfTrash"-->
+<!--            app:srcCompat="@drawable/battery" />-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
