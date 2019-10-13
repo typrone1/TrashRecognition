@@ -33,10 +33,7 @@ package devfest.hackathon.trashrecognition;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -46,23 +43,18 @@ import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.common.base.Objects;
@@ -118,6 +110,7 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
     private TextView tvDescription;
     private TextView tvTypeOfTrash;
     private ImageView ivImageGeneral;
+    private ImageView imageView;
 
 
     private FirebaseFirestore mFirestore;
@@ -182,8 +175,8 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
         tvDescription = findViewById(R.id.tvDescription);
         tvTypeOfTrash = findViewById(R.id.tvTypeOfTrash);
         //hình ảnh của pin
-        //ivImageGeneral = findViewById(R.id.ivImageGeneral);
-
+        ivImageGeneral = findViewById(R.id.ivImageGeneral);
+        imageView = findViewById(R.id.imageView);
 
 
         setUpWorkflowModel();
@@ -396,7 +389,11 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
                             InputStream ims = assetManager.open(recognitionResult.getImageGeneralUrl());
                             Drawable d = Drawable.createFromStream(ims, null);
                             ivImageGeneral.setImageDrawable(d);
+                            InputStream ims2 = assetManager.open(recognitionResult.getBinPicture());
+                            Drawable d2 = Drawable.createFromStream(ims2, null);
+                            imageView.setImageDrawable(d2);
                             ims.close();
+                            ims2.close();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -515,6 +512,14 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
         RecognitionResult solutionForPaper = new RecognitionResult();
         RecognitionResult solutionForTrash = new RecognitionResult();
         RecognitionResult solutionForElectronic = new RecognitionResult();
+        solutionForMetal.setBinPicture("selling.png");
+        solutionForGlass.setBinPicture("glass-bin.jpg");
+        solutionForBattery.setBinPicture("dange-bin.jpg");
+        solutionForCardboard.setBinPicture("paper_bin.jpg");
+        solutionForPlastic.setBinPicture("plastic-bin.jpg");
+        solutionForPaper.setBinPicture("paper_bin.jpg");
+        solutionForTrash.setBinPicture("dange-bin.jpg");
+        solutionForElectronic.setBinPicture("dange-bin.jpg");
         solutionForMetal.setLabel("metal");
         solutionForMetal.setTitle("Kim loại");
         solutionForMetal.setImageGeneralUrl("metal.png");
