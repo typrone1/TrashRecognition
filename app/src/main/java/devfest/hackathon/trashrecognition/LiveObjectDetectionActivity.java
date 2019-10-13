@@ -125,6 +125,7 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
     private Dialog dialog;
 
     private Button btnSearchConsumer;
+    private Button btnFindPlaceToDrop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,7 +178,13 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
         //hình ảnh của pin
         ivImageGeneral = findViewById(R.id.ivImageGeneral);
         imageView = findViewById(R.id.imageView);
-
+        btnFindPlaceToDrop = findViewById(R.id.btnFindPlaceToDrop);
+        btnFindPlaceToDrop.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGoogleMap();
+            }
+        });
 
         setUpWorkflowModel();
         showAlertDialog();
@@ -584,4 +591,7 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
         return null;
     }
 
+    public void openGoogleMap() {
+        startActivity(new Intent(LiveObjectDetectionActivity.this, MapsActivity.class));
+    }
 }
