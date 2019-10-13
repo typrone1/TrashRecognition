@@ -146,6 +146,7 @@ public class SearchEngine {
                 return null;
             }
         }
+
         // Create a media file name
         String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
         File mediaFile;

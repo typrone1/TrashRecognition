@@ -1,42 +1,9 @@
-/*
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/*
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 package devfest.hackathon.trashrecognition;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -46,23 +13,21 @@ import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
-import android.view.WindowManager;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.common.base.Objects;
@@ -129,9 +94,12 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
     private static final String PHONE_KEY = "description";
 
     private static List<RecognitionResult> solutions = new ArrayList<RecognitionResult>();
-    private Dialog dialog;
 
     private Button btnSearchConsumer;
+    private Button btnFindPlaceToDrop;
+    private TextView txtFinish;
+
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,11 +112,15 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
         mFirestore=FirebaseFirestore.getInstance();
 
         btnSearchConsumer=findViewById(R.id.btnSearchConsumer);
+        btnFindPlaceToDrop=findViewById(R.id.btnFindPlaceToDrop);
+        txtFinish=findViewById(R.id.txtFinish);
+
+
 
         btnSearchConsumer.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LiveObjectDetectionActivity.this,SellProductActivity.class));
+                startActivity(new Intent(getApplicationContext(), SellProductActivity.class));
             }
         });
 
@@ -189,14 +161,23 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
         setUpWorkflowModel();
         showAlertDialog();
 
-
     }
 
     public void showAlertDialog(){
-        Dialog dialog=new Dialog(this,android.R.style.Theme_DeviceDefault_Wallpaper_NoTitleBar);
+        dialog=new Dialog(this,android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
         dialog.setCanceledOnTouchOutside(true);
         dialog.setContentView(R.layout.material_dialog);
+        txtFinish=dialog.findViewById(R.id.txtFinish);
+
+        txtFinish.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
         dialog.show();
+
 
     }
 
@@ -515,6 +496,7 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
         RecognitionResult solutionForPaper = new RecognitionResult();
         RecognitionResult solutionForTrash = new RecognitionResult();
         RecognitionResult solutionForElectronic = new RecognitionResult();
+
         solutionForMetal.setLabel("metal");
         solutionForMetal.setTitle("Kim loại");
         solutionForMetal.setImageGeneralUrl("metal.png");
@@ -560,6 +542,7 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
         solutionForPaper.setTitle("Giấy loại");
         solutionForPaper.setDescription("Người dân chủ động bán/cho tặng người hoặc hệ thống thu gom phế liệu");
         solutionForPaper.setTypeOfTrashText("Chất thải tái chế");
+
         solutions.add(solutionForMetal);
         solutions.add(solutionForGlass);
         solutions.add(solutionForBattery);

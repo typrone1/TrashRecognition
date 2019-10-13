@@ -1,12 +1,17 @@
 package devfest.hackathon.trashrecognition;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.browser.customtabs.CustomTabsIntent;
 
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,6 +39,8 @@ public class SellProductActivity extends AppCompatActivity {
     String amount;
 
     DatabaseReference databaseReference;
+
+    WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,16 +85,33 @@ public class SellProductActivity extends AppCompatActivity {
         btnexercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReference = FirebaseDatabase.getInstance().getReference("Product");
+//                databaseReference = FirebaseDatabase.getInstance().getReference("Product");
+//
+//
+//                nameUser = edtName.getText().toString();
+//                addressUser = edtAddress.getText().toString();
+//                phoneUser = edtPhone.getText().toString();
+//                amount = txtAmount.getText().toString();
+//
+//                Product product = new Product(amount, nameUser, addressUser, phoneUser);
+//
+//                databaseReference.child("Information product").push().setValue(product);
+//                Toast.makeText(SellProductActivity.this, "Upload database succesfull!", Toast.LENGTH_SHORT).show();
 
-                nameUser = edtName.getText().toString();
-                addressUser = edtAddress.getText().toString();
-                phoneUser = edtPhone.getText().toString();
-                amount = txtAmount.getText().toString();
+//                webView=findViewById(R.id.wbDisplay);
+//                webView.setWebViewClient(new WebViewClient());
+//                webView.loadUrl("https://green-planet-team.firebaseapp.com/thu-mua-rac");
 
-                Product product = new Product(amount, nameUser, addressUser, phoneUser);
-                databaseReference.setValue(product);
-                Toast.makeText(SellProductActivity.this, "Upload database succesfull!", Toast.LENGTH_SHORT).show();
+//                Intent intent = new Intent(Intent.ACTION_VIEW);
+////                intent.setData(Uri.parse("https://green-planet-team.firebaseapp.com/thu-mua-rac"));
+////                startActivity(intent);
+
+//                String url = "https://green-planet-team.firebaseapp.com/thu-mua-rac";
+//                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+//                CustomTabsIntent customTabsIntent = builder.build();
+//                customTabsIntent.launchUrl(SellProductActivity.this, Uri.parse(url));
+
+                startActivity(new Intent(SellProductActivity.this,ProductActivity.class));
             }
         });
     }

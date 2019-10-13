@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         bgprogresstop = findViewById(R.id.bgprogresstop);
         bgprogress = findViewById(R.id.bgprogress);
         subtitlepage = findViewById(R.id.subtitlepage);
+
     }
 
     private void addAnimation() {

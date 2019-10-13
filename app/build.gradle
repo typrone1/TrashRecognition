@@ -63,6 +63,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:19.1.0'
 
     implementation 'br.com.simplepass:loading-button-android:1.7.2'
+    implementation 'androidx.browser:browser:1.2.0-alpha08'
 
 }
 
