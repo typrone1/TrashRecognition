@@ -8,6 +8,7 @@ public class RecognitionResult {
     private boolean droppable = true;
     private boolean sellable = true;
     private String imageGeneralUrl;
+    private String binPicture;
 
     public String getLabel() {
         return label;
@@ -61,7 +62,17 @@ public class RecognitionResult {
         return imageGeneralUrl;
     }
 
+    public String getBinPicture() {
+        return binPicture;
+    }
+
+    public void setBinPicture(String binPicture) {
+        this.binPicture = binPicture;
+    }
+
     public void setImageGeneralUrl(String imageGeneralUrl) {
         this.imageGeneralUrl = imageGeneralUrl;
     }
+
+
 }

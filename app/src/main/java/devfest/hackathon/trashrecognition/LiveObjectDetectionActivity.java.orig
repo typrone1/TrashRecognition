@@ -13,23 +13,26 @@ import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
+<<<<<<< HEAD
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
-import android.view.WindowManager;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+=======
+import android.view.View;
+import android.view.View.OnClickListener;
+>>>>>>> 1f478ed6fab61298d76bfd89f718b20435fd46c5
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.common.base.Objects;
@@ -97,11 +100,15 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
     private static final String PHONE_KEY = "description";
 
     private static List<RecognitionResult> solutions = new ArrayList<RecognitionResult>();
-    private Dialog dialog;
 
     private Button btnSearchConsumer;
     private Button btnFindPlaceToDrop;
+<<<<<<< HEAD
     private TextView txtFinish;
+
+    private Dialog dialog;
+=======
+>>>>>>> 1f478ed6fab61298d76bfd89f718b20435fd46c5
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -508,6 +515,9 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
         RecognitionResult solutionForPaper = new RecognitionResult();
         RecognitionResult solutionForTrash = new RecognitionResult();
         RecognitionResult solutionForElectronic = new RecognitionResult();
+<<<<<<< HEAD
+
+=======
         solutionForMetal.setBinPicture("selling.png");
         solutionForGlass.setBinPicture("glass-bin.jpg");
         solutionForBattery.setBinPicture("dange-bin.jpg");
@@ -516,6 +526,7 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
         solutionForPaper.setBinPicture("paper_bin.jpg");
         solutionForTrash.setBinPicture("dange-bin.jpg");
         solutionForElectronic.setBinPicture("dange-bin.jpg");
+>>>>>>> 1f478ed6fab61298d76bfd89f718b20435fd46c5
         solutionForMetal.setLabel("metal");
         solutionForMetal.setTitle("Kim loại");
         solutionForMetal.setImageGeneralUrl("metal.png");

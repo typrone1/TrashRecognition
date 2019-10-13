@@ -17,6 +17,7 @@ public class ProductActivity extends AppCompatActivity {
         wbProduct=findViewById(R.id.wbProduct);
 
         wbProduct.setWebViewClient(new WebViewClient());
+        wbProduct.reload();
         wbProduct.getSettings().setJavaScriptEnabled(true); // Enable JavaScript
         wbProduct.loadUrl("https://green-planet-team.firebaseapp.com/thu-mua-rac");
 
