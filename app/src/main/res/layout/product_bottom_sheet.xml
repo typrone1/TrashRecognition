@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#F4F3F1"
     android:orientation="vertical">
 
 
@@ -60,7 +60,6 @@
         android:scrollbars="vertical">
 
         <ImageView
-
             android:id="@+id/imageView"
             android:layout_width="197dp"
             android:layout_height="224dp"
@@ -80,6 +79,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtSolve"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:padding="10dp"
+                    android:text="Cách thức xử lý:"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/tvDescription"
@@ -115,22 +123,22 @@
             tools:ignore="MissingConstraints">
 
             <Button
+                android:background="#efdfbf"
                 android:id="@+id/btnSearchConsumer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="6"
-                android:background="@drawable/border_common"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="Đăng bán" />
 
             <Button
+                android:background="#efdfbf"
                 android:id="@+id/btnFindPlaceToDrop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="4"
-                android:background="@drawable/border_common"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="Tìm điểm xử lý" />
 
@@ -167,16 +175,47 @@
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
-        <ImageView
-            android:id="@+id/ivImageGeneral"
-            android:layout_width="146dp"
-            android:layout_height="107dp"
-            app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.425"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/tvTypeOfTrash"
-            app:srcCompat="@drawable/battery" />
+        <LinearLayout
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/tvTypeOfTrash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:background="@drawable/border_bottom_sheet"
+                android:layout_marginStart="10dp"
+                android:id="@+id/txtBuyProdcut"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_light"
+                android:padding="10dp"
+                android:text="Beginner"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/tvTypeOfTrash"
+                android:layout_width="wrap_content" />
+
+
+            <TextView
+                android:background="@drawable/border_bottom_sheet"
+                android:layout_marginStart="10dp"
+                android:id="@+id/txtFindlocation"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_light"
+                android:padding="10dp"
+                android:text="Out door"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/txtBuyProdcut"
+                android:layout_width="wrap_content" />
+        </LinearLayout>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

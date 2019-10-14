@@ -35,7 +35,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/fitonedesc"
+                android:id="@+id/txtNameProduct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -102,11 +102,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="Name"
+                android:text="Tên người bán"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
 
             <EditText
+                android:inputType="textPersonName"
                 android:id="@+id/txtUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -120,11 +121,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="Phone Number"
+                android:text="Số điện thoại"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
 
             <EditText
+                android:inputType="number"
                 android:id="@+id/edtPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -133,15 +135,17 @@
                 android:textColor="@android:color/black" />
 
             <TextView
+
                 android:id="@+id/txtAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="Address"
+                android:text="Địa chỉ"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
 
             <EditText
+                android:inputType="textPostalAddress"
                 android:id="@+id/edtAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -189,7 +193,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/border_common"
-        android:text="Đăng bán"
+        android:text="Đăng sản phẩm"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="22sp"

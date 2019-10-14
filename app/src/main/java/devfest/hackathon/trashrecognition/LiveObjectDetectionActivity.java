@@ -29,11 +29,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.common.base.Objects;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -88,8 +86,6 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
     private ImageView imageView;
 
 
-    private FirebaseFirestore mFirestore;
-
     private static final String NAME_KEY = "address";
 
     private static final String EMAIL_KEY = "amount";
@@ -106,12 +102,13 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setupMockDataSolution();
+
         searchEngine = new SearchEngine(getApplicationContext());
 
         setContentView(R.layout.activity_live_object);
         //get Instance from firebase
-        mFirestore=FirebaseFirestore.getInstance();
 
         btnSearchConsumer=findViewById(R.id.btnSearchConsumer);
         btnFindPlaceToDrop=findViewById(R.id.btnFindPlaceToDrop);
@@ -156,7 +153,7 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
         tvDescription = findViewById(R.id.tvDescription);
         tvTypeOfTrash = findViewById(R.id.tvTypeOfTrash);
         //hình ảnh của pin
-        ivImageGeneral = findViewById(R.id.ivImageGeneral);
+        //ivImageGeneral = findViewById(R.id.ivImageGeneral);
         imageView = findViewById(R.id.imageView);
         btnFindPlaceToDrop = findViewById(R.id.btnFindPlaceToDrop);
         btnFindPlaceToDrop.setOnClickListener(new OnClickListener() {
@@ -372,7 +369,9 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
                 searchedObject -> {
                     if (searchedObject != null) {
                         Product productRecognition = searchedObject.getProductList().get(0);
+
                         RecognitionResult recognitionResult = findSolutionByLabel(productRecognition.getTitle());
+
                         objectThumbnailForBottomSheet = searchedObject.getObjectThumbnail();
                         bottomSheetTitleView.setText(productRecognition.getTitle());
                         bottomSheetTitleView.setText(recognitionResult.getTitle());
@@ -571,6 +570,7 @@ public class LiveObjectDetectionActivity extends AppCompatActivity implements On
         solutions.add(solutionForTrash);
         solutions.add(solutionForPaper);
     }
+
 
     private static RecognitionResult findSolutionByLabel(String label) {
         for (RecognitionResult recognitionResult : solutions) {

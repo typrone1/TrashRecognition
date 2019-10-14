@@ -9,7 +9,10 @@ public class Product {
     String nameUser;
     String amount;
 
-    public Product( String addressLabel, String phoneProduct, String nameUser, String amount) {
+    public Product() {
+    }
+
+    public Product(String addressLabel, String phoneProduct, String nameUser, String amount) {
         this.amount = amount;
         this.nameUser = nameUser;
         this.addressLabel = addressLabel;
